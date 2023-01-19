@@ -69,7 +69,7 @@
 									</th>
     							</tr>
     						</thead>
-							<tbody class="bg-white divide-y divide-gray-200">
+							<tbody class="bg-white divide-y divide-gray-200 border-b">
 								@foreach ($posts as $item)
 	    							<tr >
 	    								<td class="px-6 py-4">
@@ -87,7 +87,7 @@
 	    										{{$item->content}}
 											</div>
 	    								</td>
-										<td class="px-6 py-4 border-b whitespace-nowrap text-sm font-medium">
+										<td class="px-1 py-4 whitespace-nowrap text-sm font-medium">
 											<a class="btn btn-green" wire:click="edit({{$item->id}})">
 												<i class="fas fa-edit"></i>
 											</a>
@@ -100,6 +100,12 @@
 					@else
 						<div class="px-6 py-4">
 							No existe ningún registro que coincida
+						</div>
+					@endif
+
+					@if ($posts->hasPages())						
+						<div class="px-6 py-3">
+							{{ $posts->links() }}
 						</div>
 					@endif
 					
