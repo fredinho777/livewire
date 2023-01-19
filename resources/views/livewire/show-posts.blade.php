@@ -12,8 +12,17 @@
 			<div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
 				<div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
 					<div class="px-6 py-4 flex items-center">
-						{{-- <input type="text" wire:model="search"> --}}
-						<x-jet-input class="flex-1 mr-4" type="text" placeholder="Buscar" wire:model="search" />
+						<div class="flex items-center">
+							<span>Mostrar</span>
+							<select wire:model="cant" class="mx-2 form-control">
+								<option value="10">10</option>
+								<option value="25">25</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+							<span>entradas</span>
+						</div>
+						<x-jet-input class="flex-1 mx-4" type="text" placeholder="Buscar" wire:model="search" />
 						@livewire('create-post')
 					</div>
 					@if ($posts->count())
