@@ -26,13 +26,15 @@
                 <x-jet-input-error for="title" />
             </div>
 
-            <div class="mb-4" wire:ignore>
+            <div class="mb-4">
                 <x-jet-label value="Contenido del post" />
-                <textarea id="editor" 
-                    wire:model.defer="content" 
-                    class="form-control w-full" 
-                    rows="6">
-                </textarea>
+                <div wire:ignore>
+                    <textarea id="editor" 
+                        wire:model.defer="content" 
+                        class="form-control w-full" 
+                        rows="6">
+                    </textarea>
+                </div>
 
                 <x-jet-input-error for="content" />
             </div>
@@ -64,6 +66,9 @@
                 .then(function(editor){
                     editor.model.document.on('change:data', () => {
                         @this.set('content', editor.getData());
+                    });
+                    Livewire.on('resetCKEditor', () => {
+                        editor.setData('');
                     })
                 })
 				.catch( error => {
