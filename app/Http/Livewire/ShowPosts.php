@@ -23,6 +23,8 @@ class ShowPosts extends Component {
 
     public $open_edit = false;
 
+    protected $listeners = ['render', 'delete'];
+
     protected $queryString = [
         'cant' => ['except' => '10'], 
         'sort' => ['except' => 'id'], 
@@ -45,7 +47,7 @@ class ShowPosts extends Component {
     ];
 
     // protected $listeners = ['render' => 'render']; //cuando escucha el evento render, ejecuta el método render
-    protected $listeners = ['render'];
+    
 
     public function render()  {
 
@@ -94,5 +96,9 @@ class ShowPosts extends Component {
         $this->reset(['open_edit','image']);
         $this->identificador = rand();
         $this->emit('alert', 'El post se actualizó satisfactoriamente');
+    }
+
+    public function delete(Post $post){
+        $post->delete();
     }
 }
