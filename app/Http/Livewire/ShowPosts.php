@@ -19,6 +19,8 @@ class ShowPosts extends Component {
     public $sort = 'id';
     public $direction = 'desc';
 
+    public $readyToLoad = false;
+
     public $open_edit = false;
 
     protected $queryString = [
@@ -45,12 +47,22 @@ class ShowPosts extends Component {
     // protected $listeners = ['render' => 'render']; //cuando escucha el evento render, ejecuta el método render
     protected $listeners = ['render'];
 
-    public function render() {
-        $posts = Post::where('title', 'like', '%' . $this->search . '%')
+    public function render()  {
+
+        $posts = [];
+
+        if ($this->readyToLoad) {
+            $posts = Post::where('title', 'like', '%' . $this->search . '%')
                         ->orWhere('content', 'like', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
                         ->paginate($this->cant);
+        }
+        
         return view('livewire.show-posts', compact('posts'));
+    }
+
+    public function loadPosts(){
+        $this->readyToLoad = true;
     }
 
     public function order($sort){

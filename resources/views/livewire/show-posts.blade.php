@@ -1,4 +1,4 @@
-<div>
+<div wire:init='loadPosts'>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -25,7 +25,8 @@
 						<x-jet-input class="flex-1 mx-4" type="text" placeholder="Buscar" wire:model="search" />
 						@livewire('create-post')
 					</div>
-					@if ($posts->count())
+					
+					@if (count($posts))
 
 						<table class="min-w-full leading-normal">
     						<thead>
@@ -106,17 +107,33 @@
     						</tbody>
     					</table>
 
+						@if ($posts->hasPages())						
+							<div class="px-6 py-3">
+								{{ $posts->links() }}
+							</div>
+						@endif
+
 					@else
-						<div class="px-6 py-4">
-							No existe ningún registro que coincida
-						</div>
+
+						@if (!$readyToLoad)
+							<div style="color: #f6d860" class="la-pacman la-2x">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						@else
+
+							<div class="px-6 py-4">
+								No existe ningún registro que coincida
+							</div>
+
+						@endif
+					
 					@endif
 
-					@if ($posts->hasPages())						
-						<div class="px-6 py-3">
-							{{ $posts->links() }}
-						</div>
-					@endif
 					
 					
 				</div>
